@@ -2,51 +2,61 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>貸款AI評估系統</title>
+  <title>AI貸款資格審查系統</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 flex justify-center items-center h-screen">
+<body class="bg-gray-100 p-6">
 
-  <div class="bg-white p-8 rounded-2xl shadow-lg w-96">
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow">
 
-    <h2 class="text-xl font-bold mb-6 text-center">📊 貸款AI評估系統</h2>
+<h2 class="text-2xl font-bold mb-6">🤖 AI貸款資格審查系統</h2>
 
-    <label class="block mb-1">年齡</label>
-    <input id="age" class="w-full border p-2 rounded mb-4">
+<!-- 個人資料 -->
+<h3 class="font-semibold mb-2">👤 個人資訊</h3>
 
-    <label class="block mb-1">月收入</label>
-    <input id="income" class="w-full border p-2 rounded mb-4">
+<input id="age" placeholder="年齡" class="w-full border p-2 rounded mb-3">
+<input id="income" placeholder="月收入" class="w-full border p-2 rounded mb-3">
 
-    <label class="block mb-1">是否有負債</label>
-    <select id="debt" class="w-full border p-2 rounded mb-4">
-      <option value="0">無</option>
-      <option value="1">有</option>
-    </select>
+<select id="debt" class="w-full border p-2 rounded mb-4">
+  <option value="0">無負債</option>
+  <option value="1">有負債</option>
+</select>
 
-    <button onclick="checkLoan()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
-      AI判定
-    </button>
+<button onclick="checkLoan()" 
+class="w-full bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700">
+🚀 AI立即評估
+</button>
 
-    <h3 id="result" class="mt-4 text-center font-bold text-lg"></h3>
+<!-- 結果 -->
+<div id="resultBox" class="mt-6 hidden p-4 rounded-xl"></div>
 
-  </div>
+</div>
 
-  <script>
-    function checkLoan() {
-      let age = document.getElementById("age").value;
-      let income = document.getElementById("income").value;
-      let debt = document.getElementById("debt").value;
+<script>
+function checkLoan() {
+  let age = Number(document.getElementById("age").value);
+  let income = Number(document.getElementById("income").value);
+  let debt = Number(document.getElementById("debt").value);
 
-      if (age > 20 && income > 30000 && debt == 0) {
-        document.getElementById("result").innerHTML = "🟢 可貸";
-      } else if (income > 20000) {
-        document.getElementById("result").innerHTML = "🟡 需評估";
-      } else {
-        document.getElementById("result").innerHTML = "🔴 高風險";
-      }
-    }
-  </script>
+  let resultBox = document.getElementById("resultBox");
+
+  resultBox.classList.remove("hidden");
+
+  if (age > 20 && income > 30000 && debt === 0) {
+    resultBox.className = "mt-6 p-4 rounded-xl bg-green-100 text-green-700";
+    resultBox.innerHTML = "🟢 <b>核貸機率高</b><br>建議可直接申請貸款";
+  } 
+  else if (income > 20000) {
+    resultBox.className = "mt-6 p-4 rounded-xl bg-yellow-100 text-yellow-700";
+    resultBox.innerHTML = "🟡 <b>需進一步評估</b><br>建議補充財力證明";
+  } 
+  else {
+    resultBox.className = "mt-6 p-4 rounded-xl bg-red-100 text-red-700";
+    resultBox.innerHTML = "🔴 <b>風險較高</b><br>建議改善收入或降低負債";
+  }
+}
+</script>
 
 </body>
 </html>
