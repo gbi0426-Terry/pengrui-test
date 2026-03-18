@@ -1,61 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>AI貸款資格審查系統</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<title>AI貸款系統</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-<div class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow">
+<div class="bg-white w-[420px] p-6 rounded-2xl shadow-lg">
 
-<h2 class="text-2xl font-bold mb-6">🤖 AI貸款資格審查系統</h2>
+<h2 class="text-xl font-bold mb-4">🤖 AI貸款評估</h2>
 
-<!-- 個人資料 -->
-<h3 class="font-semibold mb-2">👤 個人資訊</h3>
+<!-- 進度 -->
+<div class="mb-4 text-sm text-gray-500">
+  步驟 <span id="stepText">1</span> / 3
+</div>
 
-<input id="age" placeholder="年齡" class="w-full border p-2 rounded mb-3">
-<input id="income" placeholder="月收入" class="w-full border p-2 rounded mb-3">
+<!-- Step 1 -->
+<div id="step1">
+  <input id="age" placeholder="年齡"
+  class="w-full border p-2 rounded mb-3">
+  
+  <button onclick="nextStep(2)"
+  class="w-full bg-blue-500 text-white p-2 rounded">
+  下一步
+  </button>
+</div>
 
-<select id="debt" class="w-full border p-2 rounded mb-4">
-  <option value="0">無負債</option>
-  <option value="1">有負債</option>
-</select>
+<!-- Step 2 -->
+<div id="step2" class="hidden">
+  <input id="income" placeholder="月收入"
+  class="w-full border p-2 rounded mb-3">
 
-<button onclick="checkLoan()" 
-class="w-full bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700">
-🚀 AI立即評估
-</button>
+  <select id="debt"
+  class="w-full border p-2 rounded mb-3">
+    <option value="0">無負債</option>
+    <option value="1">有負債</option>
+  </select>
 
-<!-- 結果 -->
-<div id="resultBox" class="mt-6 hidden p-4 rounded-xl"></div>
+  <button onclick="nextStep(3)"
+  class="w-full bg-blue-500 text-white p-2 rounded">
+  下一步
+  </button>
+</div>
+
+<!-- Step 3 -->
+<div id="step3" class="hidden text-center">
+  <button onclick="runAI()"
+  class="w-full bg-green-500 text-white p-3 rounded">
+  🚀 AI開始分析
+  </button>
+
+  <div id="loading" class="hidden mt-4">分析中...</div>
+  <div id="result" class="mt-4 text-lg font-bold"></div>
+</div>
 
 </div>
 
 <script>
-function checkLoan() {
+
+function nextStep(step){
+  document.getElementById("step1").classList.add("hidden");
+  document.getElementById("step2").classList.add("hidden");
+  document.getElementById("step3").classList.add("hidden");
+
+  document.getElementById("step"+step).classList.remove("hidden");
+  document.getElementById("stepText").innerText = step;
+}
+
+function runAI(){
   let age = Number(document.getElementById("age").value);
   let income = Number(document.getElementById("income").value);
   let debt = Number(document.getElementById("debt").value);
 
-  let resultBox = document.getElementById("resultBox");
+  let loading = document.getElementById("loading");
+  let result = document.getElementById("result");
 
-  resultBox.classList.remove("hidden");
+  loading.classList.remove("hidden");
+  result.innerHTML = "";
 
-  if (age > 20 && income > 30000 && debt === 0) {
-    resultBox.className = "mt-6 p-4 rounded-xl bg-green-100 text-green-700";
-    resultBox.innerHTML = "🟢 <b>核貸機率高</b><br>建議可直接申請貸款";
-  } 
-  else if (income > 20000) {
-    resultBox.className = "mt-6 p-4 rounded-xl bg-yellow-100 text-yellow-700";
-    resultBox.innerHTML = "🟡 <b>需進一步評估</b><br>建議補充財力證明";
-  } 
-  else {
-    resultBox.className = "mt-6 p-4 rounded-xl bg-red-100 text-red-700";
-    resultBox.innerHTML = "🔴 <b>風險較高</b><br>建議改善收入或降低負債";
-  }
+  setTimeout(()=>{
+    loading.classList.add("hidden");
+
+    if (age > 20 && income > 30000 && debt === 0){
+      result.innerHTML = "🟢 核貸機率高";
+    } else if (income > 20000){
+      result.innerHTML = "🟡 需進一步評估";
+    } else {
+      result.innerHTML = "🔴 風險較高";
+    }
+
+  },1500);
 }
+
 </script>
 
 </body>
