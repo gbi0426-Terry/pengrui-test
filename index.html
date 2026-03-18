@@ -3,26 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>貸款AI評估系統</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body style="font-family:sans-serif; max-width:600px; margin:auto;">
 
-  <h2>📊 貸款AI評估系統</h2>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
 
-  <label>年齡：</label><br>
-  <input id="age"><br><br>
+  <div class="bg-white p-8 rounded-2xl shadow-lg w-96">
 
-  <label>月收入：</label><br>
-  <input id="income"><br><br>
+    <h2 class="text-xl font-bold mb-6 text-center">📊 貸款AI評估系統</h2>
 
-  <label>是否有負債：</label><br>
-  <select id="debt">
-    <option value="0">無</option>
-    <option value="1">有</option>
-  </select><br><br>
+    <label class="block mb-1">年齡</label>
+    <input id="age" class="w-full border p-2 rounded mb-4">
 
-  <button onclick="checkLoan()">AI判定</button>
+    <label class="block mb-1">月收入</label>
+    <input id="income" class="w-full border p-2 rounded mb-4">
 
-  <h3 id="result"></h3>
+    <label class="block mb-1">是否有負債</label>
+    <select id="debt" class="w-full border p-2 rounded mb-4">
+      <option value="0">無</option>
+      <option value="1">有</option>
+    </select>
+
+    <button onclick="checkLoan()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+      AI判定
+    </button>
+
+    <h3 id="result" class="mt-4 text-center font-bold text-lg"></h3>
+
+  </div>
 
   <script>
     function checkLoan() {
