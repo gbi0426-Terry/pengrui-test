@@ -2,16 +2,43 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>貸款AI測試系統</title>
+  <title>貸款AI評估系統</title>
 </head>
-<body style="font-family:sans-serif; text-align:center; margin-top:50px;">
-  
-  <h1>🚀 貸款AI測試頁</h1>
-  <p>這是 Terry 的第一個上線網站！</p>
+<body style="font-family:sans-serif; max-width:600px; margin:auto;">
 
-  <button onclick="alert('AI判定：🟢通過')">
-    AI測試判定
-  </button>
+  <h2>📊 貸款AI評估系統</h2>
+
+  <label>年齡：</label><br>
+  <input id="age"><br><br>
+
+  <label>月收入：</label><br>
+  <input id="income"><br><br>
+
+  <label>是否有負債：</label><br>
+  <select id="debt">
+    <option value="0">無</option>
+    <option value="1">有</option>
+  </select><br><br>
+
+  <button onclick="checkLoan()">AI判定</button>
+
+  <h3 id="result"></h3>
+
+  <script>
+    function checkLoan() {
+      let age = document.getElementById("age").value;
+      let income = document.getElementById("income").value;
+      let debt = document.getElementById("debt").value;
+
+      if (age > 20 && income > 30000 && debt == 0) {
+        document.getElementById("result").innerHTML = "🟢 可貸";
+      } else if (income > 20000) {
+        document.getElementById("result").innerHTML = "🟡 需評估";
+      } else {
+        document.getElementById("result").innerHTML = "🔴 高風險";
+      }
+    }
+  </script>
 
 </body>
 </html>
